@@ -1,0 +1,105 @@
+Imagine you want to use a powerful computer that is not in your room, but is located in an Amazon (AWS) data center somewhere in the world. This remote computer will run the Windows operating system.
+
+Your task is to:
+1.  **Create** this remote Windows computer (called an "EC2 Instance" in AWS).
+2.  **Connect** to it from your own personal computer, as if you were sitting in front of it. You'll do this using a tool called "Remote Desktop Protocol" or RDP.
+3.  Once connected, you'll open the Command Prompt (CMD), take a screenshot of the system information, and share it.
+
+---
+
+### Step-by-Step Walkthrough
+
+Here’s how you can do it, step by step.
+
+#### Step 1: Create the Windows VM in AWS EC2
+
+1.  **Log in to AWS:** Go to the [AWS Management Console](https://aws.amazon.com/console/) and sign in. If you don't have an account, you'll need to create one (note: you need a credit/debit card, but the "Free Tier" should cover this task).
+
+2.  **Find EC2:** In the search bar at the top, type `EC2` and click on it. This is the service that lets you create virtual machines.
+
+3.  **Launch an Instance:** On the EC2 dashboard, click the big orange button that says **"Launch Instance"**.
+
+4.  **Choose a Windows AMI (The Operating System):**
+    *   You will see a list of machine images (AMIs). Look for one that says **"Microsoft Windows Server"**.
+    *   It's best to choose one that has **"Free tier eligible"** next to it (e.g., Windows Server 2022 Base). This will save you money.
+
+    
+
+5.  **Choose Instance Type:**
+    *   The `t2.micro` or `t3.micro` type is selected by default and is free tier eligible. This is perfect for our task. Just click **"Next: Configure Instance Details"**.
+
+6.  **Configure Security Group (The Most Important Step for RDP):**
+    *   Keep clicking "Next" until you get to the **"Configure Security Group"** page.
+    *   A Security Group is like a virtual firewall. We need to create a rule that allows your computer to connect via RDP.
+    *   **Add Rule:**
+        *   **Type:** `RDP`
+        *   **Source:** From the dropdown, choose **"My IP"**. This automatically fills in your computer's public IP address, making it more secure by only allowing *you* to connect.
+
+    
+
+7.  **Review and Launch:**
+    *   Click **"Review and Launch"**. Review the settings, then click the final **"Launch"** button.
+
+8.  **Create a Key Pair (Your Secure Password File):**
+    *   A pop-up will appear asking you to select a key pair. This is your secure key to get the password for the Windows machine.
+    *   Select **"Create a new key pair"**.
+    *   Give it a name (e.g., `my-windows-key`).
+    *   Click **"Download Key Pair"**. **This is very important!** Save the `.pem` file to a safe location on your computer (like your Desktop or a dedicated folder). You cannot download it again.
+    *   Click **"Launch Instances"**.
+
+    
+
+#### Step 2: Get the Administrator Password
+
+Your Windows VM is now starting up. It takes a few minutes.
+
+1.  Back on the EC2 dashboard, click **"Instances"** on the left menu.
+2.  Select your new Windows instance (check the box).
+3.  Once the "Instance State" says **"Running"** and the "Status Checks" say **"2/2 checks passed"**, it's ready.
+4.  Click the **"Actions"** button -> **"Security"** -> **"Get Windows Password"**.
+5.  Click **"Browse"** and upload the `.pem` key pair file you downloaded earlier.
+6.  Click **"Decrypt Password"**. AWS will now show you the **Administrator password**. **Copy this password** and save it somewhere safe. You will need it to log in.
+
+    
+
+#### Step 3: Connect via RDP
+
+1.  With your instance still selected in the EC2 console, click the **"Connect"** button at the top.
+2.  Go to the **"RDP client"** tab.
+3.  You will see the **Public IP address** of your instance and the Username (`Administrator`).
+4.  On your local Windows PC, open the **Remote Desktop Connection** app. You can find it by searching for "Remote Desktop" in the Start Menu.
+5.  In the "Computer" field, paste the **Public IP address** from the AWS console.
+6.  Click "Connect". It will ask for credentials.
+    *   Username: `Administrator`
+    *   Password: Paste the password you decrypted in the previous step.
+7.  Click "Yes" if it warns you about the certificate.
+
+**Congratulations!** You are now connected to your remote Windows machine in AWS. You will see its desktop.
+
+#### Step 4: Open CMD and Get System Info
+
+1.  Inside the remote Windows desktop, click the Start Menu and type `cmd` or `Command Prompt` and open it.
+2.  In the black command prompt window, type the following command and press Enter:
+    ```cmd
+    systeminfo
+    ```
+3.  You will see a long list of details about the system—its name, version, RAM, etc.
+
+#### Step 5: Share the System Info
+
+The simplest way to "share" this as proof is to **take a screenshot**.
+
+*   Inside the remote desktop, press the `PrtScn` (Print Screen) button on your keyboard.
+*   Open "Paint" and paste the screenshot (`Ctrl + V`).
+*   Save the image and share it as required.
+
+---
+
+### Summary of Tech Stacks Used:
+
+*   **AWS EC2 (Windows):** This is the service that provides the virtual computer (server) in the cloud.
+*   **RDP (Remote Desktop Protocol):** This is the standard method for connecting to and controlling a remote Windows machine, giving you a full graphical desktop experience.
+
+You have successfully created a cloud-based Windows computer, securely connected to it, and retrieved its system information!
+
+
