@@ -59,4 +59,7 @@ AWS-windows-vm-project/
 - ✅ System information gathered via CMD
 - ✅ All screenshots and files pushed to GitHub
 
+## 🎉 Output Link with Screenshot:
+- https://docs.google.com/document/d/1xkm4EtPRaxIMqslQ6GCdX1e9GXzZLe7qH8Xpwq9i9Qo/edit?usp=sharing
+
 ---
